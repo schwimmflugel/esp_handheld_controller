@@ -5,7 +5,10 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-Radio::Radio(){
+Radio::Radio(){}
+
+
+void Radio::begin(){
     WiFi.mode(WIFI_STA);
 
     // Init ESP-NOW
@@ -38,7 +41,12 @@ Radio::Radio(){
 
 bool Radio::send_data(byte* packet, byte packet_size){
     // Send message via ESP-NOW
-    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &packet, sizeof(packet));
+    Serial.println("Sending data: ");
+    for( int i; i < packet_size; i++){
+        Serial.println(packet[i]);
+    }
+
+    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) packet, packet_size);
     
     if (result == ESP_OK) {
         Serial.println("Sent with success");

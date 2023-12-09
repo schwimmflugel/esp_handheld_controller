@@ -11,6 +11,7 @@ class Radio{
 
     public:
         Radio();
+        void begin();
         bool send_data(byte* packet, byte packet_size);
 
 
